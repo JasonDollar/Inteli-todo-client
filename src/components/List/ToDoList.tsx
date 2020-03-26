@@ -1,13 +1,15 @@
 import React from 'react'
+import { Todo } from '../../interfaces'
+import { TodoItem } from '../Todo/TodoItem'
 
 interface Props {
-  todos: any[]
+  todos: Todo[]
 }
 
 const ToDoList: React.FC<Props> = ({ todos }) => (
   <div>
     {todos.map(item => (
-      <p key={item.id}>{item.title}</p>
+      <TodoItem todoItem={item} />
     ))}
   </div>
 )
