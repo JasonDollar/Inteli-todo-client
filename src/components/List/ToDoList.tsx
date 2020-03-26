@@ -9,7 +9,7 @@ interface Props {
 const ToDoList: React.FC<Props> = ({ todos }) => (
   <div>
     {todos.map(item => (
-      <TodoItem todoItem={item} />
+      <TodoItem key={item.id} todoItem={item} />
     ))}
   </div>
 )

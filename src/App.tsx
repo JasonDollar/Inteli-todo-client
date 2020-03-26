@@ -1,16 +1,25 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import { MainList } from './pages'
+import { MainList, CreateTodo } from './pages'
+import { TodoProvider } from './contexts/TodoContext'
 
 function App() {
   return (
     <Router>
-      <Switch>
-        <Route path="/" exact>
-          <MainList />
-        </Route>
-      </Switch>
+      <TodoProvider>
+        <div className="center">
+
+          <Switch>
+            <Route path="/" exact>
+              <MainList />
+            </Route>
+            <Route path="/create" exact>
+              <CreateTodo />
+            </Route>
+          </Switch>
+        </div>
+      </TodoProvider>
     </Router>
 
   )

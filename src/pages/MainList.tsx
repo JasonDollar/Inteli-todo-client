@@ -1,17 +1,11 @@
-import React, { useState } from 'react'
-
+import React, { useContext } from 'react'
+import { TodoContext } from '../contexts/TodoContext'
 import { ToDoList } from '../components'
 
-const TODOS_TEST = [
-  {
-    id: 1,
-    title: 'First todo',
-    completed: false,
-  },
-]
+
 
 const MainList: React.FC = () => {
-  const [todos] = useState(TODOS_TEST)
+  const { todos } = useContext(TodoContext)
   return (
     <div>
       <ToDoList todos={todos} />
