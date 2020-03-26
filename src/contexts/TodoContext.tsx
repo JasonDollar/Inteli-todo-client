@@ -1,5 +1,6 @@
-import React, { useState, createContext, useReducer } from 'react'
+import React, { createContext, useReducer } from 'react'
 import { Todo } from '../interfaces'
+import { saveInLocalStorage } from '../lib/saveInLocalStorage'
 
 interface TodoContext {
   todos: Todo[]
@@ -19,9 +20,8 @@ interface Action {
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'ADD':
-      return {
-        todos: [...state.todos, action.payload],
-      }
+      // 
+      return { todos: [...state.todos, action.payload] }
     case 'TOGGLE_COMPLETED':
       return {
         todos: state.todos.map(item => {
@@ -48,7 +48,13 @@ const TODOS_TEST = [
 
 export const TodoProvider = ({ children }: any) => {
   // const [todos, setTodos] = useState<Todo[]>([])
-  const [state, dispatch] = useReducer(reducer, { todos: TODOS_TEST })
+  let todosLocalStorage = JSON.parse(localStorage.getItem('todos') as string)
+  if (!todosLocalStorage) {
+    todosLocalStorage = { todos: TODOS_TEST }
+  }
+  const [state, dispatch] = useReducer(reducer, todosLocalStorage)
+  // saves state on local storage for every change
+  saveInLocalStorage('todos', state)
 
   const addTodo = (todo: Todo): void => {
     dispatch({
