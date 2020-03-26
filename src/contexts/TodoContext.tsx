@@ -4,6 +4,7 @@ import { Todo } from '../interfaces'
 interface TodoContext {
   todos: Todo[]
   addTodo: (todo: Todo) => void
+  toggleTodoCompleted: (todo: any) => void
 }
 
 interface State {
@@ -11,12 +12,25 @@ interface State {
 }
 
 interface Action {
-  type: 'ADD',
+  type: 'ADD' | 'TOGGLE_COMPLETED',
   payload?: any
 }
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
+    case 'ADD':
+      return {
+        todos: [...state.todos, action.payload],
+      }
+    case 'TOGGLE_COMPLETED':
+      return {
+        todos: state.todos.map(item => {
+          if (item.id === action.payload) {
+            return { ...item, completed: !item.completed }
+          }
+          return item
+        }),
+      }
     default:
       return state
   }
@@ -43,8 +57,15 @@ export const TodoProvider = ({ children }: any) => {
     })
   }
 
+  const toggleTodoCompleted = (id: any) => {
+    dispatch({
+      type: 'TOGGLE_COMPLETED',
+      payload: id,
+    })
+  }
+
   return (
-    <TodoContext.Provider value={{ todos: state.todos, addTodo }}>
+    <TodoContext.Provider value={{ todos: state.todos, addTodo, toggleTodoCompleted }}>
       {children}
     </TodoContext.Provider>
   )
