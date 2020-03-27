@@ -20,7 +20,6 @@ interface Action {
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'ADD':
-      // 
       return { todos: [...state.todos, action.payload] }
     case 'TOGGLE_COMPLETED':
       return {
