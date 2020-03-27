@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import { useHistory } from 'react-router-dom'
 import { TodoContext } from '../contexts/TodoContext'
 
 const CreateTodo = () => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const { addTodo } = useContext(TodoContext)
-  // console.log(context)
-  const handleSubmit = (e: React.FormEvent) => {
+  const history = useHistory()
+  
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const newTodo = {
       id: uuidv4(),
@@ -17,6 +19,7 @@ const CreateTodo = () => {
     }
     console.log(newTodo)
     addTodo(newTodo)
+    history.push('/')
   }
 
 
